@@ -1,0 +1,24 @@
+{
+    "name": "jep/modules",
+    "description": "Basic modules",
+    "authors": [
+        {
+            "name": "Jur Erick Porras",
+            "email": "jurerick.porras@gmail.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.0",
+        "illuminate/support": "4.0.x",
+        "laravel/framework": "4.0.*"
+    },
+    "autoload": {
+        "classmap": [
+            "src/migrations"
+        ],
+        "psr-0": {
+            "Jep\\Modules": "src/"
+        }
+    },
+    "minimum-stability": "dev"
+}
