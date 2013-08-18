@@ -16,10 +16,10 @@ class Admin_UserController extends JepController {
      */
     public function index()
     {
-        //make sure that we never get the admin user
-        $adminRole = Role::where('name', '=', 'admin')->first();
+        //make sure that we never get the superadmin and admin 
+        $userRole = Role::where('name', '=', 'user')->first();
 
-        $users = User::where('role_id', '!=', $adminRole->id)->get();
+        $users = User::where('role_id', '=', $userRole->id)->get();
 
         return View::make('modules::admin.user.index', array('users' => $users));
     }
@@ -60,7 +60,8 @@ class Admin_UserController extends JepController {
                 'username' => Input::get('username'),
                 'password' => Hash::make(Input::get('password')),
                 'email' => Input::get('email'),
-                'role_id' => 2,
+                //save the user as user role by default
+                'role_id' => Role::where('name', '=', 'user')->first()->id, 
                 'active' => Input::get('active')
             );
 

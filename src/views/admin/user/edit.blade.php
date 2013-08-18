@@ -1,7 +1,15 @@
-@extends('default.layouts.main')
+@extends('admin.layouts.' . $settings->adminLayout)
 
 @section('title')
 	Edit User
+@stop
+
+
+@section('header_links')
+	@if($role->isSuperAdmin)
+		<li>{{ HTML::linkAction('Admin_SettingsController@getEdit', 'Settings')}}</li>
+	@endif
+	@parent
 @stop
 
 @section('header')

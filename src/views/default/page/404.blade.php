@@ -1,11 +1,11 @@
-@extends('default.layouts.main')
+@extends('default.layouts.' . $settings->defaultLayout)
 
 @section('title')
 	Page Not Found
 @stop
 
 @section('header')
-	<h1>{{ HTML::linkAction( $baseRoute . 'DashboardController@index', $appData->appName) }}</h1>
+	<h1>{{ HTML::linkAction( $baseRoute . 'DashboardController@index', $settings->appName) }}</h1>
 @stop
 
 @section('content')

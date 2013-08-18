@@ -1,4 +1,4 @@
-@extends('default.layouts.main')
+@extends('default.layouts.' . $settings->defaultLayout)
 
 @section('title')
 	Edit Account

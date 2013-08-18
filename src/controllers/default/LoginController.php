@@ -40,6 +40,7 @@ class Default_LoginController extends JepController {
 						$role = User::find(Auth::user()->id)->role->name;
 
 						switch($role){
+							case 'super_admin':
 							case 'admin':
 								return Redirect::to('admin/dashboard');
 								break;

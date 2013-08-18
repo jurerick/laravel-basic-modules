@@ -1,13 +1,15 @@
-@extends('default.layouts.main')
+@extends('default.layouts.' . $settings->defaultLayout)
 
 @section('title')
 	Login
 @stop
 
 @section('header')
+	<h1>{{ HTML::linkAction('Default_LoginController@getIndex', $settings->appName) }}</h1>
 @stop
 
 @section('content')
+
 	<h1>Login</h1>
 	
 	{{ $errors->first('auth', '<p class="error">:message</p>') }}
@@ -29,4 +31,5 @@
 		</div>
 	
 	{{ Form::close() }}
+	
 @stop

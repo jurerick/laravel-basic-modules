@@ -45,3 +45,8 @@ Route::group(array('before' => 'admin-auth', 'prefix' => 'admin'), function(){
 	Route::resource('user', 'Admin_UserController');
 });
 
+/*Settings*/
+Route::group(array('before' => 'superadmin-auth', 'prefix' => 'admin'), function(){
+	Route::controller('settings', 'Admin_SettingsController');
+});
+

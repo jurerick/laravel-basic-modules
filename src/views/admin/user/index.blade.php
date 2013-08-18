@@ -1,4 +1,4 @@
-@extends('default.layouts.main')
+@extends('admin.layouts.' . $settings->adminLayout)
 
 @section('scripts')
 	@include('modules::admin.sections.scripts')
@@ -6,6 +6,13 @@
 
 @section('title')
 	Manage Users
+@stop
+
+@section('header_links')
+	@if($role->isSuperAdmin)
+		<li>{{ HTML::linkAction('Admin_SettingsController@getEdit', 'Settings')}}</li>
+	@endif
+	@parent
 @stop
 
 @section('header')
@@ -27,9 +34,10 @@
 	<h1>Manage User</h1>
 
 	<nav>
-		<ul>@yield('subnav')</ul>
+		@yield('subnav')
 	</nav>
 
+	@if(count($users))
 	<table>
 		<thead>
 			<th>Username</th>
@@ -68,4 +76,7 @@
 		
 	});
 	</script>
+	@else
+	<p>No records found.</p>
+	@endif
 @stop

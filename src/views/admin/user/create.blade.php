@@ -1,7 +1,14 @@
-@extends('default.layouts.main')
+@extends('admin.layouts.' . $settings->adminLayout)
 
 @section('title')
 	Add New User
+@stop
+
+@section('header_links')
+	@if($role->isSuperAdmin)
+		<li>{{ HTML::linkAction('Admin_SettingsController@getEdit', 'Settings')}}</li>
+	@endif
+	@parent
 @stop
 
 @section('header')
@@ -37,7 +44,7 @@
 		</div>
 		<div>
 			{{ Form::label('active', 'Active') }}
-			{{ Form::select('active', array(0 => 'No', 1 => 'Yes')) }}
+			{{ Form::select('active', array(0 => 'No', 1 => 'Yes'), 1) }}
 		</div>
 		<div>
 			{{ Form::label('username', 'Username') }}

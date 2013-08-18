@@ -1,7 +1,14 @@
-@extends('default.layouts.main')
+@extends('admin.layouts.' . $settings->adminLayout)
 
 @section('title')
-	Edit Account
+	Edit My Account
+@stop
+
+@section('header_links')
+	@if($role->isSuperAdmin)
+		<li>{{ HTML::linkAction('Admin_SettingsController@getEdit', 'Settings')}}</li>
+	@endif
+	@parent
 @stop
 
 @section('header')
@@ -16,7 +23,8 @@
 	
 	@if($successMsg) <p class='success'>{{$successMsg}}</p> @endif
 
-	<h1>Edit My Account</h1>
+	<h1>@yield('title')</h1>
+	
 	{{ Form::open(array('action' => 'Admin_AccountController@postEdit')) }}
 		
 		<div>

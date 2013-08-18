@@ -11,8 +11,9 @@ class JepController extends Controller {
 	{
 
 		View::share(array(
-			'appData' => AppConfig::get(),
+			'settings' => AppConfig::get(),
 			'auth' => Auth::user(),
+			'role' => $this->getRole(),
 			'module' => $this->getCurrentModule(),
 			'baseRoute' => $this->baseRoute(),
 			'successMsg' =>  Session::get('successMsg'),
@@ -65,6 +66,32 @@ class JepController extends Controller {
 			return 'Default_';
 	}
 
+	protected function getRole(){
 
+		$data = array(
+			'isSuperAdmin' => false,
+			'isAdmin' => false,
+			'isUser' => false
+		);
+
+		if(Auth::user()){
+
+			$role = User::find(Auth::user()->id)->role->name;
+
+			switch($role){
+				case 'super_admin':
+					$data['isSuperAdmin'] = true;
+					break;
+				case 'admin':
+					$data['isAdmin'] = true;
+					break;
+				default:
+					$data['isUser'] = true;
+					break;
+			}
+		}
+		
+		return (object) $data;
+	}
 
 }
