@@ -1,7 +1,7 @@
 {
     "name": "jep/modules",
     "description": "Basic modules",
-    "keywords": ["laravel"],
+    "keywords": ["jep" , "laravel"],
     "authors": [
         {
             "name": "Jur Erick Porras",
@@ -10,7 +10,7 @@
     ],
     "require": {
         "php": ">=5.3.0",
-        "illuminate/support": "4.0.x",
+        "illuminate/support": "4.0.x"
     },
     "autoload": {
         "classmap": [
