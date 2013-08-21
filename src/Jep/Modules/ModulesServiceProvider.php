@@ -19,17 +19,13 @@ class ModulesServiceProvider extends ServiceProvider {
 	public function boot()
 	{
 		$this->package('jep/modules');
-	}
 
-	/**
-	 * Register the service provider.
-	 *
-	 * @return void
-	 */
-	public function register()
-	{
-	
-		
+		//Add install route
+		$install = base_path() . '/workbench/jep/modules/src/install.php';
+		if (file_exists($install)) {
+       		require $install; 
+        }
+
 		//Add routes
 	   $routes = base_path() . '/workbench/jep/modules/src/routes.php';
        
@@ -43,6 +39,18 @@ class ModulesServiceProvider extends ServiceProvider {
        if (file_exists($filters)) {
        		require $filters; 
        }
+
+	}
+
+	/**
+	 * Register the service provider.
+	 *
+	 * @return void
+	 */
+	public function register()
+	{
+	
+		
 	}
 
 	/**
@@ -52,7 +60,7 @@ class ModulesServiceProvider extends ServiceProvider {
 	 */
 	public function provides()
 	{
-		return array('modules');
+		return array();
 	}
 
 }

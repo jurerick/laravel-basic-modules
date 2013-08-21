@@ -9,6 +9,7 @@ class Admin_DashboardController extends JepController {
      */
     public function index()
     {   
+       
         return View::make('modules::admin.dashboard.index');
     }
 

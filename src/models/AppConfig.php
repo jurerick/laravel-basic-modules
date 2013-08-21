@@ -25,7 +25,10 @@ class AppConfig extends Eloquent {
 			
 		}
 
-		return (object) $data;
+		if($data)
+			return (object) $data;
+		else
+			return $data;
 
 	}
 

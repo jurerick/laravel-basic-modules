@@ -35,8 +35,9 @@ class Admin_SettingsController extends JepController {
 
                 AppConfig::where('key', '=', $key)->update(array('value' => $val));
 
-                Session::flash('successMsg', 'Application settings successfully saved.');
             }
+
+            Session::flash('successMsg', 'Application settings successfully saved.');
 
         }else{
 

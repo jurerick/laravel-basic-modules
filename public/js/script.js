@@ -2,7 +2,7 @@ $(document).ready(function(){
 
 
 	/**
-	* Delete a record 
+	* Delete a record from database
 	*/
 	$.fn.deleteModel = function(model){
 

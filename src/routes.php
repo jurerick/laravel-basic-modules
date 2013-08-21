@@ -13,7 +13,7 @@
 
 Route::get('page-not-found', 'JepController@pageNotFound');
 Route::get('admin/page-not-found', 'JepController@pageNotFound');
-Route::get('/', array('before' => 'auth', 'uses' => 'Default_DashboardController@index'));
+Route::get('/', array('as' => 'homepage', 'before' => 'auth', 'uses' => 'Default_DashboardController@index'));
 Route::get('logout', array('as' => 'logout', 'uses' => 'JepController@logout'));
 
 /*Login*/
@@ -26,7 +26,7 @@ Route::group(array('before' => 'auth'), function(){
 	Route::get('dashboard', 'Default_DashboardController@index');
 });
 Route::group(array('before' => 'admin-auth', 'prefix' => 'admin'), function(){
-	Route::get('/', 'Admin_DashboardController@index');
+	Route::get('/', array('as' => 'adminpage', 'uses' => 'Admin_DashboardController@index'));
 	Route::get('dashboard', 'Admin_DashboardController@index');
 });
 
