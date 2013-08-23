@@ -4,7 +4,12 @@ class Install_ConfigController extends Install_BaseController {
 
 	function create(){
 
-		return View::make('modules::install.config.create', array('settings' => AppConfig::get()));
+		$superAdminId = User::where('role_id', '=', Role::where('name', 'super_admin')->first()->id)->first()->id;
+
+		return View::make('modules::install.config.create', array(
+			'settings' => AppConfig::get(), 
+			'adminId' => $superAdminId)
+		);
 	}
 
 

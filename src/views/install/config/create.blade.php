@@ -33,7 +33,7 @@
 
 		<div>
 			{{ Form::submit('Save') }}
-			{{ HTML::linkAction('Install_DbController@migrateSuccess', 'Back') }}
+			{{ HTML::linkRoute('admin-edit', 'Back', array('id' => $adminId)) }}
 		</div>
 
 	{{ Form::close() }}

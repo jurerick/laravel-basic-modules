@@ -51,6 +51,8 @@ class Install_DbController extends Install_BaseController {
     	}
 
     	//note: temporary command call in workbench.
+        Artisan::call('migrate:reset');
+
     	Artisan::call('migrate', array('--bench' => 'jep/modules'));
 
     	Session::flash('successMsg', 'Migration Successful.');
@@ -61,8 +63,11 @@ class Install_DbController extends Install_BaseController {
 
     public function migrateSuccess(){
 
+        $superAdminId = User::where('role_id', Role::where('name', 'super_admin')->first()->id)->first()->id;
+
     	return View::make('modules::install.db.success', array(
-    			'tables' => Config::get('modules::tables')
+    			'tables' => Config::get('modules::tables'),
+                'adminId' => $superAdminId,
     		));
     }
 

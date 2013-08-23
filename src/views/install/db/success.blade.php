@@ -18,9 +18,14 @@
 	</ul>
 	@endif
 
-	{{ Form::open(array('action' => 'Install_ConfigController@create')) }}
-	
-		{{ Form::submit('Continue') }}
+	{{ Form::open(array('action' => 'Install_AdminController@create')) }}
+		
+		@if($adminId)
+			{{ HTML::linkRoute('admin-edit', 'Continue', array('id' => $adminId)) }}
+		@else
+			{{ Form::submit('Continue') }}
+		@endif
+		
 		{{ HTML::linkAction('Install_DbController@migrate', 'Back') }}
 
 	{{ Form::close() }}

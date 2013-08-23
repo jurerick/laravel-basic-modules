@@ -13,10 +13,6 @@
 
 	<p>The following tables will be created into database <strong>{{ $database }}</strong></p>
 
-	<p>Warning: table with <span>conflict</span> mark will be DELETED 
-			and will replace by installation with its own table structure.</p>
-
-
 	@if(count($tables))
 	<ul>
 		@foreach($tables as $tbl => $is_exists)
@@ -24,6 +20,9 @@
 		@endforeach
 	</ul>
 	@endif
+
+	<p>Warning: table with <span>conflict</span> mark will be DELETED 
+			and will replace by installation with its own table structure.</p>
 
 	{{ Form::open(array('action' => 'Install_DbController@postMigrate')) }}
 		{{ Form::submit('Continue') }}
