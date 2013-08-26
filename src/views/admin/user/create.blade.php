@@ -42,6 +42,14 @@
 			{{ Form::text('email') }}
 			{{ $errors->first('email', '<span class="error">:message</span>') }}
 		</div>
+
+		@if($role->isSuperAdmin)
+		<div>
+			{{ Form::label('role_id', 'Role') }}
+			{{ Form::select('role_id' , $roles) }}
+		</div>
+		@endif
+
 		<div>
 			{{ Form::label('active', 'Active') }}
 			{{ Form::select('active', array(0 => 'No', 1 => 'Yes'), 1) }}

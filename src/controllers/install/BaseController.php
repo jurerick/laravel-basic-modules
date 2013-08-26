@@ -36,7 +36,8 @@ class Install_BaseController extends Controller {
 
 	protected function finish(){
 
-		//pending: we will delete here the install route 
+		//delete the install route.
+		File::delete(base_path(). '/workbench/jep/modules/src/install.php');
 
 		return View::make('modules::install.finish');
 	}

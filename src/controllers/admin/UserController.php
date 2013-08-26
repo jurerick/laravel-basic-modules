@@ -16,10 +16,22 @@ class Admin_UserController extends JepController {
      */
     public function index()
     {
-        //make sure that we never get the superadmin and admin 
-        $userRole = Role::where('name', '=', 'user')->first();
+        //make sure that we never get the superadmin in admin view
+        $userRoleIds = array();
 
-        $users = User::where('role_id', '=', $userRole->id)->get();
+        $userRole = DB::table('roles')->where('name', 'user');
+
+        if($this->getRole()->isSuperAdmin){
+            $userRole->orwhere('name', 'admin');
+        }
+
+        $userRole = $userRole->get();
+
+        foreach ($userRole as $value) {
+            $userRoleIds[] = $value->id;
+        }
+
+        $users = User::wherein('role_id', $userRoleIds)->get();
 
         return View::make('modules::admin.user.index', array('users' => $users));
     }
@@ -31,8 +43,15 @@ class Admin_UserController extends JepController {
      */
     public function create()
     {   
+        $roleSelect = array();
 
-        return View::make('modules::admin.user.create');
+        $roles = DB::table('roles')->orderBy('id', 'desc')->get();
+
+        foreach($roles as $_role){
+            $roleSelect[$_role->id] = ucwords(str_replace('_', ' ', $_role->name));
+        }
+
+        return View::make('modules::admin.user.create', array('roles' => $roleSelect));
     }
 
     /**
@@ -54,14 +73,15 @@ class Admin_UserController extends JepController {
 
         if($valid === true){
             
+            $roleId = (Input::has('role_id')) ?  Input::get('role_id') : Role::where('name', '=', 'user')->first()->id;
+
             $data = array(
                 'fname' => Input::get('fname'),
                 'lname' => Input::get('lname'),
                 'username' => Input::get('username'),
                 'password' => Hash::make(Input::get('password')),
                 'email' => Input::get('email'),
-                //save the user as user role by default
-                'role_id' => Role::where('name', '=', 'user')->first()->id, 
+                'role_id' => $roleId, 
                 'active' => Input::get('active')
             );
 
@@ -104,9 +124,17 @@ class Admin_UserController extends JepController {
     public function edit($id)
     { 
 
+        $roleSelect = array();
+
+        $roles = DB::table('roles')->orderBy('id', 'desc')->get();
+
+        foreach($roles as $_role){
+            $roleSelect[$_role->id] = ucwords(str_replace('_', ' ', $_role->name));
+        }
+
         $user = User::find($id);
 
-        return View::make('modules::admin.user.edit', $user);
+        return View::make('modules::admin.user.edit', array('user' => $user, 'roles' => $roleSelect));
     }
 
     /**
@@ -133,11 +161,16 @@ class Admin_UserController extends JepController {
             $user->fname = Input::get('fname');
             $user->lname = Input::get('lname');
             $user->email = Input::get('email');
+            $user->active = Input::get('active');
+            
+            if(Input::has('role_id')){
+                $user->role_id = Input::get('role_id');
+            }
+            
             $user->username = Input::get('username');
             
-            $password = Input::get('password');
-            if(!empty($password)){
-                $user->password = Hash::make($password);  
+            if(Input::has('password')){
+                $user->password = Hash::make(Input::get('password'));  
             } 
 
             $user->active = Input::get('active');

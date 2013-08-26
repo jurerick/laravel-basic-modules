@@ -63,11 +63,13 @@ class Install_DbController extends Install_BaseController {
 
     public function migrateSuccess(){
 
-        $superAdminId = User::where('role_id', Role::where('name', 'super_admin')->first()->id)->first()->id;
+        $roleId = ($role = Role::where('name', 'super_admin')->first()) ? $role->id : null;
+
+        $superAdminId = ($user = User::where('role_id', $roleId)->first()) ? $user->id : null;
 
     	return View::make('modules::install.db.success', array(
     			'tables' => Config::get('modules::tables'),
-                'adminId' => $superAdminId,
+                'adminId' => $superAdminId
     		));
     }
 
